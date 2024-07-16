@@ -1,5 +1,5 @@
 services:
-  webmin:
+webmin:
     image: johanp/webmin
     networks:
       - frontend
