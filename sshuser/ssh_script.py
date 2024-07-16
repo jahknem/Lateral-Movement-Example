@@ -1,8 +1,8 @@
 import paramiko
 import time
 
-JUMPHOST_SSH_PORT = 2222
-TARGET_SSH_PORT = 2223
+JUMPHOST_SSH_PORT = 22
+TARGET_SSH_PORT = 22
 
 
 def ssh_jump(host, port, username, password, key_filename=None):

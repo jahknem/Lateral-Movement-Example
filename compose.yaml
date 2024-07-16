@@ -1,6 +1,6 @@
 services:
   webmin:
-    image: johanp/webmin
+    build: ./webmin
     networks:
       - frontend
   sshuser:
