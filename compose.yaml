@@ -1,7 +1,39 @@
 services:
-  webmin:
-    build: ./webmin
-    container_name: webmin_container
+#  webmin:
+#    build: ./webmin
+#    container_name: webmin_container
+#    ports:
+#      - "10000:10000"
+#    restart: unless-stopped
+#    networks:
+#      - frontend
+
+  sshuser:
+    build: ./sshuser
+    depends_on:
+      - jumphost
+    networks:
+      - frontend
+
+  jumphost:
+    build: ./jumphost
     ports:
-      - "10000:10000"
-    restart: unless-stopped
+      - "2222:22"
+    networks:
+      - frontend
+      - backend
+
+  target:
+    build: ./target
+    depends_on:
+      - jumphost
+    ports:
+      - "2223:22"
+    networks:
+      - backend
+
+networks:
+  frontend:
+    driver: bridge
+  backend:
+    driver: bridge
