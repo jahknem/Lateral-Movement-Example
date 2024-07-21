@@ -5,7 +5,7 @@ while true; do
 
 sshpass -p "Wintermute" ssh -o StrictHostKeyChecking=no -tt jumphost << 'EOF'
 sshpass -p "aHyN7NJov38I77q" ssh -o StrictHostKeyChecking=no -tt target << 'EOT'
-sleep 5
+sleep 120
 touch /tmp/hello.txt
 exit
 EOT
