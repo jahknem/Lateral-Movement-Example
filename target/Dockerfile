@@ -14,6 +14,13 @@ RUN echo "auth.* /var/log/auth.log" >> /etc/rsyslog.conf \
     && mkdir -p /var/spool/rsyslog \
     && touch /var/log/auth.log
 
+# Add the public key to authorized_keys
+COPY .ssh/id_rsa.pub /root/.ssh/id_rsa.pub
+RUN mkdir -p /root/.ssh \
+    && cat /root/.ssh/id_rsa.pub >> /root/.ssh/authorized_keys \
+    && chmod 600 /root/.ssh/authorized_keys \
+    && rm /root/.ssh/id_rsa.pub
+
 # Expose SSH port
 EXPOSE 22
 
