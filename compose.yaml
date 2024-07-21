@@ -1,21 +1,27 @@
 services:
   webmin:
+    hostname: webmin
     image: johanp/webmin
     networks:
       - frontend
   sshuser:
+    hostname: sshuser
     build: ./sshuser
     depends_on:
       - jumphost
     networks:
       - office
   jumphost:
+    hostname: jumphost
     build: ./jumphost
+    ports:
+      - "2222:22"
     networks:
       - frontend
       - backend
       - office
   target:
+    hostname: target
     build: ./target
     depends_on:
       - jumphost
