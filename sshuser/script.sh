@@ -1,14 +1,13 @@
 #!/bin/bash
 
+ssh-keyscan -H jumphost >> ~/.ssh/known_hosts
+
 while true; do
     echo "SSH connect"
 
-sshpass -p "Wintermute" ssh -o StrictHostKeyChecking=no -tt jumphost << 'EOF'
-sshpass -p "aHyN7NJov38I77q" ssh -o StrictHostKeyChecking=no -tt target << 'EOT'
+ssh -i /root/.ssh/id_rsa -A -tt -o StrictHostKeyChecking=no -J root@jumphost root@target << 'EOF'
 sleep 120
 touch /tmp/hello.txt
-exit
-EOT
 exit
 EOF
 

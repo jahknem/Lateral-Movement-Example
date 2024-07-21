@@ -14,6 +14,19 @@ RUN echo "auth.* /var/log/auth.log" >> /etc/rsyslog.conf \
     && mkdir -p /var/spool/rsyslog \
     && touch /var/log/auth.log
 
+    # Configure SSH to allow TCP forwarding
+RUN ssh-keygen -A \
+    && sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config \
+    && sed -i 's/^AllowTcpForwarding.*/AllowTcpForwarding yes/' /etc/ssh/sshd_config \
+    && sed -i 's/^PermitTunnel.*/PermitTunnel yes/' /etc/ssh/sshd_config \
+    && sed -i 's/^GatewayPorts.*/GatewayPorts yes/' /etc/ssh/sshd_config \
+    && sed -i 's/^AllowAgentForwarding.*/AllowAgentForwarding yes/' /etc/ssh/sshd_config \
+    && { grep -q '^AllowTcpForwarding' /etc/ssh/sshd_config || echo 'AllowTcpForwarding yes' >> /etc/ssh/sshd_config; } \
+    && { grep -q '^PermitTunnel' /etc/ssh/sshd_config || echo 'PermitTunnel yes' >> /etc/ssh/sshd_config; } \
+    && { grep -q '^GatewayPorts' /etc/ssh/sshd_config || echo 'GatewayPorts yes' >> /etc/ssh/sshd_config; } \
+    && { grep -q '^AllowAgentForwarding' /etc/ssh/sshd_config || echo 'AllowAgentForwarding yes' >> /etc/ssh/sshd_config; }
+
+
 # Add the public key to authorized_keys
 COPY .ssh/id_rsa.pub /root/.ssh/id_rsa.pub
 RUN mkdir -p /root/.ssh \
