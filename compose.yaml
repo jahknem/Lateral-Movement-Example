@@ -1,10 +1,10 @@
 services:
-  webmin:
-    build: ./webmin
-    ports:
-      - "10000:10000"
-    networks:
-      - frontend
+  # webmin:
+  #   build: ./webmin
+  #   ports:
+  #     - "10000:10000"
+  #   networks:
+  #     - frontend
   ssh_user:
     build: ./ssh_client
     env_file:

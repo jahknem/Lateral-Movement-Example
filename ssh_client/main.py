@@ -1,5 +1,6 @@
 import os
 import paramiko
+import time
 
 # Connect to 'target' via 'jumphost' jumphost using /root/.ssh/id_rsa as private key
 def connect_to_target(jumphost, target):
@@ -17,7 +18,12 @@ def connect_to_target(jumphost, target):
 
 # Run
 try:
-    target_client = connect_to_target('jumphost', 'target')
+    while True:
+        target_client = connect_to_target('jumphost', 'target')
+        stdin, stdout, stderr = target_client.exec_command('uptime')
+        print(stdout.read().decode())
+        target_client.close()
+        time.sleep(300)
 except Exception as e:
     print(f"Error: {e}")
 # Wait for 5 minutes

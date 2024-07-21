@@ -17,3 +17,7 @@ ssh-add /root/.ssh/id_rsa
 
 # Execute the main application
 exec "$@"
+# Output DONE to indicate the script has completed
+echo "DONE"
+
+
