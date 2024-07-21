@@ -12,7 +12,10 @@ RUN ssh-keygen -A \
     && echo "PermitTunnel yes" >> /etc/ssh/sshd_config \
     && echo "GatewayPorts yes" >> /etc/ssh/sshd_config
 
+COPY entrypoint.sh /usr/local/bin/entrypoint.sh
+RUN chmod +x /usr/local/bin/entrypoint.sh
+
 # Expose SSH port
 EXPOSE 22
 
-CMD ["/usr/sbin/sshd", "-D"]
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]

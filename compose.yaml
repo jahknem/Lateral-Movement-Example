@@ -5,24 +5,35 @@ services:
       - "10000:10000"
     networks:
       - frontend
-  sshuser:
-    build: ./sshuser
+  ssh_user:
+    build: ./ssh_client
+    env_file:
+      - .env
     volumes:
-      - ./sshuser/.ssh/:/root/.ssh/id_rsa
+      - ./ssh_client/.ssh/:/root/.ssh/
     depends_on:
       - jumphost
     networks:
       - office
+    entrypoint: /usr/local/bin/entrypoint.sh
   jumphost:
     build: ./jumphost
+    env_file:
+      - .env_pub
     volumes:
       - ./jumphost/authorized_keys:/root/.ssh/authorized_keys
     networks:
       - frontend
       - backend
       - office
+    environment:
+      - PUB=${PUB}
   target:
     build: ./target
+    env_file:
+      - .env_pub
+    environment:
+      - PUB=${PUB}
     volumes:
       - ./target/authorized_keys:/root/.ssh/authorized_keys
     depends_on:
