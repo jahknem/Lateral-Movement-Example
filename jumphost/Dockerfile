@@ -17,12 +17,20 @@ RUN ssh-keygen -A \
     && { grep -q '^GatewayPorts' /etc/ssh/sshd_config || echo 'GatewayPorts yes' >> /etc/ssh/sshd_config; } \
     && { grep -q '^AllowAgentForwarding' /etc/ssh/sshd_config || echo 'AllowAgentForwarding yes' >> /etc/ssh/sshd_config; }
 
+RUN echo -e "\nHost *\n    ForwardAgent yes\n" >> /etc/ssh/ssh_config
+
 # Add the public key to authorized_keys
 COPY .ssh/id_rsa.pub /root/.ssh/id_rsa.pub
 RUN mkdir -p /root/.ssh \
     && cat /root/.ssh/id_rsa.pub >> /root/.ssh/authorized_keys \
     && chmod 600 /root/.ssh/authorized_keys \
     && rm /root/.ssh/id_rsa.pub
+
+# Ensure SSH agent is started
+RUN mkdir -p /etc/service/ssh-agent \
+    && echo '#!/bin/sh' > /etc/service/ssh-agent/run \
+    && echo 'exec /usr/bin/ssh-agent -D' >> /etc/service/ssh-agent/run \
+    && chmod +x /etc/service/ssh-agent/run
 
 # Expose SSH port
 EXPOSE 22

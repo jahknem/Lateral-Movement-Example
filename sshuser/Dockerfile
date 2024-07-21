@@ -14,5 +14,7 @@ RUN chmod 600 /root/.ssh/id_rsa
 # Make the script executable
 RUN chmod +x /script.sh
 
+RUN echo -e "\nHost *\n    ForwardAgent yes\n" >> /etc/ssh/ssh_config
+
 # Set the entrypoint to run the wrapper script
 ENTRYPOINT ["/bin/bash", "./script.sh"]

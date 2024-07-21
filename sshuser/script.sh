@@ -2,10 +2,12 @@
 
 ssh-keyscan -H jumphost >> ~/.ssh/known_hosts
 
+eval $(ssh-agent)
+
 while true; do
     echo "SSH connect"
 
-ssh -i /root/.ssh/id_rsa -A -tt -o StrictHostKeyChecking=no -J root@jumphost root@target << 'EOF'
+ssh -A -i /root/.ssh/id_rsa -tt -o StrictHostKeyChecking=no -J root@jumphost root@target << 'EOF'
 sleep 120
 touch /tmp/hello.txt
 exit
