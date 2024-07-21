@@ -4,8 +4,11 @@ FROM python:3
 COPY requirements.txt ./
 RUN pip install --no-cache-dir -r requirements.txt
 
+# install ping, ssh, and dnsutils
 RUN apt-get update -y && apt-get install -y --no-install-recommends \
     openssh-client \
+    dnsutils \
+    inetutils-ping \
     sshpass
 
 # RUN mkdir -p /root/.ssh && \
@@ -19,10 +22,7 @@ COPY entrypoint.sh /usr/local/bin/entrypoint.sh
 # Ensure the script is executable
 RUN chmod +x /usr/local/bin/entrypoint.sh
 
-COPY main.py ./
+COPY main.py /usr/local/bin/main.py
 
 # Set the entrypoint script
-ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
-
-# Default command
-CMD ["python", "./main.py"]
+CMD ["/usr/local/bin/entrypoint.sh"]

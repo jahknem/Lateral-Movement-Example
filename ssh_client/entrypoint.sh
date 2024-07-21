@@ -16,7 +16,7 @@ eval "$(ssh-agent -s)"
 ssh-add /root/.ssh/id_rsa
 
 # Execute the main application
-exec "$@"
+exec "python3" "/usr/local/bin/main.py"
 # Output DONE to indicate the script has completed
 echo "DONE"
 

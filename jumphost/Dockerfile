@@ -1,8 +1,9 @@
 # Dockerfile for "jumphost"
-FROM alpine:latest
+FROM ubuntu:focal
 
 # Install OpenSSH
-RUN apk add --no-cache openssh openssh-client sshpass \
+RUN apt update && \
+    apt install openssh-server openssh-client sshpass -y \
     && echo "root:Wintermute" | chpasswd
 
 # Configure SSH to allow TCP forwarding

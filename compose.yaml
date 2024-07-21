@@ -1,21 +1,22 @@
 services:
-  # webmin:
-  #   build: ./webmin
-  #   ports:
-  #     - "10000:10000"
-  #   networks:
-  #     - frontend
+  webmin:
+    build: ./webmin
+    ports:
+      - "10000:10000"
+    networks:
+      - frontend
   ssh_user:
-    build: ./ssh_client
-    env_file:
-      - .env
-    volumes:
-      - ./ssh_client/.ssh/:/root/.ssh/
+    # build: ./ssh_client
+    image: mcshrimp69/lateral-movement-example-sshuser:latest
+    # env_file:
+    #   - .env
+    # volumes:
+    #   - ./ssh_client/.ssh/:/root/.ssh/
     depends_on:
       - jumphost
     networks:
       - office
-    entrypoint: /usr/local/bin/entrypoint.sh
+    # entrypoint: /usr/local/bin/entrypoint.sh
   jumphost:
     build: ./jumphost
     env_file:

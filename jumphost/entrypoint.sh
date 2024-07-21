@@ -4,5 +4,8 @@
 echo "$PUB" | base64 -d > /root/.ssh/id_25519.pub
 chmod 644 /root/.ssh/id_25519.pub
 
+mkdir /var/run/sshd
+chmod 0755 /var/run/sshd
+
 # Start the SSH daemon
 exec /usr/sbin/sshd -D
