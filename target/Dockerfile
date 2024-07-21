@@ -28,11 +28,14 @@ RUN ssh-keygen -A \
 
 
 # Add the public key to authorized_keys
-COPY .ssh/id_rsa.pub /root/.ssh/id_rsa.pub
+COPY .ssh/bob.pub /root/.ssh/bob.pub
 RUN mkdir -p /root/.ssh \
-    && cat /root/.ssh/id_rsa.pub >> /root/.ssh/authorized_keys \
+    && cat /root/.ssh/bob.pub >> /root/.ssh/authorized_keys \
     && chmod 600 /root/.ssh/authorized_keys \
-    && rm /root/.ssh/id_rsa.pub
+    && rm /root/.ssh/bob.pub
+
+# Add a flag "flag.txt" to the container
+COPY flag.txt /root/flag.txt
 
 # Expose SSH port
 EXPOSE 22

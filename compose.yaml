@@ -1,7 +1,9 @@
 services:
   webmin:
     hostname: webmin
-    image: johanp/webmin
+    build: ./webmin
+    ports: 
+      - "10000:10000"
     networks:
       - frontend
   sshuser:
