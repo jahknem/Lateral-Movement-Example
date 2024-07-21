@@ -3,14 +3,13 @@
 while true; do
     echo "SSH connect"
 
-sshpass -p "Wintermute" ssh -o StrictHostKeyChecking=no -tt jumphost << 'EOF'
-sshpass -p "aHyN7NJov38I77q" ssh -o StrictHostKeyChecking=no -tt target << 'EOT'
-sleep 5
-touch /tmp/hello.txt
-exit
-EOT
-exit
+    # Connect to the target via the jumphost using the -J option with key-based authentication
+    ssh -o StrictHostKeyChecking=no -J jumphost -tt target << 'EOF'
+    sleep 5
+    touch /tmp/hello.txt
+    exit
 EOF
 
-    sleep 1 # sleep 1 second
+    # Sleep 1 second before repeating
+    sleep 1
 done

@@ -7,18 +7,24 @@ services:
       - frontend
   sshuser:
     build: ./sshuser
+    volumes:
+      - ./sshuser/.ssh/:/root/.ssh/id_rsa
     depends_on:
       - jumphost
     networks:
       - office
   jumphost:
     build: ./jumphost
+    volumes:
+      - ./jumphost/authorized_keys:/root/.ssh/authorized_keys
     networks:
       - frontend
       - backend
       - office
   target:
     build: ./target
+    volumes:
+      - ./target/authorized_keys:/root/.ssh/authorized_keys
     depends_on:
       - jumphost
     networks:
