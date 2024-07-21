@@ -1,17 +1,14 @@
-# Dockerfile for "sshuser"
-FROM python:3.9-slim
+# Use a lightweight base image with sshpass and ssh installed
+FROM alpine:latest
 
-# Install SSH client and necessary Python package
-RUN apt-get update && \
-    apt-get install -y openssh-client && \
-    pip install paramiko && \
-    rm -rf /var/lib/apt/lists/*
+# Install necessary packages
+RUN apk add --no-cache openssh sshpass bash
 
-# Set work directory
-WORKDIR /app
+# Copy the script into the container
+COPY script.sh /script.sh
 
-# Copy the Python script
-COPY ssh_script.py /app/
+# Make the script executable
+RUN chmod +x /script.sh
 
-# Command to run the script
-CMD ["python", "ssh_script.py"]
+# Set the entrypoint to run the wrapper script
+ENTRYPOINT ["/bin/bash", "./script.sh"]
