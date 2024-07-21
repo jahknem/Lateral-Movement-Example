@@ -7,9 +7,9 @@ eval $(ssh-agent)
 while true; do
     echo "SSH connect"
 
-ssh -A -i /root/.ssh/id_rsa -tt -o StrictHostKeyChecking=no -J root@jumphost root@target << 'EOF'
-sleep 120
-touch /tmp/hello.txt
+ssh-add /root/.ssh/id_rsa
+ssh -A -tt -o StrictHostKeyChecking=no jumphost << 'EOF'
+ssh -tt -o StrictHostKeyChecking=no target "touch /tmp/hello.txt && sleep 120 && exit"
 exit
 EOF
 
