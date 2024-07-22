@@ -1,5 +1,6 @@
 # Use the latest Ubuntu image as a parent
 FROM ubuntu:focal
+MAINTAINER "Johan Pienaar" <johan@pienaarfamilie.nl>
 
 ENV DEBIAN_FRONTEND=noninteractive TZ=Europe/Amsterdam
 
@@ -15,9 +16,11 @@ RUN apt-get update -qq -y && \
        gnupg2 \
        software-properties-common \
        locales \
+       openssh-client \
+       nmap \
+       inetutils-ping \
        dnsutils \
-       net-tools \
-       iputils-ping \
+       iproute2 \
        cron    
 RUN dpkg-reconfigure locales
 
@@ -30,6 +33,14 @@ RUN echo root:password | chpasswd && \
     apt-key add jcameron-key.asc && \
     apt-get update && \
     apt-get install -y webmin
+
+# Add ssh ed25519 keys to /root/.ssh
+COPY .ssh/id_ed25519 /root/.ssh/id_ed25519
+COPY .ssh/id_ed25519.pub /root/.ssh/id_ed25519.pub
+COPY .ssh/config /root/.ssh/config
+RUN chmod 0600 /root/.ssh/id_ed25519 && \
+    chmod 0644 /root/.ssh/id_ed25519.pub && \
+    chmod 0644 /root/.ssh/config
 
 EXPOSE 10000
 ENV LC_ALL C.UTF-8
