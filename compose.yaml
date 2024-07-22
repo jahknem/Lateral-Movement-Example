@@ -13,6 +13,7 @@ services:
       - jumphost
     networks:
       - office
+    entrypoint: /usr/local/bin/entrypoint.sh
   jumphost:
     hostname: jumphost
     build: ./jumphost
@@ -22,9 +23,17 @@ services:
       - frontend
       - backend
       - office
+    environment:
+      - PUB=${PUB}
   target:
     hostname: target
     build: ./target
+    env_file:
+      - .env_pub
+    environment:
+      - PUB=${PUB}
+    volumes:
+      - ./target/authorized_keys:/root/.ssh/authorized_keys
     depends_on:
       - jumphost
     networks:
