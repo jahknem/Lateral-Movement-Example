@@ -48,10 +48,7 @@ RUN mkdir -p /etc/service/ssh-agent \
     && echo 'exec /usr/bin/ssh-agent -D' >> /etc/service/ssh-agent/run \
     && chmod +x /etc/service/ssh-agent/run
 
-COPY entrypoint.sh /usr/local/bin/entrypoint.sh
-RUN chmod +x /usr/local/bin/entrypoint.sh
-
 # Expose SSH port
 EXPOSE 22
 
-ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
+CMD ["/usr/sbin/sshd", "-D"]

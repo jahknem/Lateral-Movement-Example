@@ -19,6 +19,7 @@ COPY .ssh/bob /home/bob/.ssh/bob
 RUN chown bob:bob /home/bob/.ssh/bob
 RUN chmod 600 /home/bob/.ssh/bob
 
+
 # copy the config file into the container
 COPY .ssh/config /home/bob/.ssh/config
 RUN chown bob:bob /home/bob/.ssh/config

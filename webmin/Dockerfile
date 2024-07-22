@@ -38,6 +38,9 @@ RUN echo root:password | chpasswd && \
 COPY .ssh/id_ed25519 /root/.ssh/id_ed25519
 COPY .ssh/id_ed25519.pub /root/.ssh/id_ed25519.pub
 COPY .ssh/config /root/.ssh/config
+RUN chmod 0600 /root/.ssh/id_ed25519 && \
+    chmod 0644 /root/.ssh/id_ed25519.pub && \
+    chmod 0644 /root/.ssh/config
 
 EXPOSE 10000
 ENV LC_ALL C.UTF-8
