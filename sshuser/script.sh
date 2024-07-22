@@ -12,7 +12,7 @@ while true; do
     echo "SSH connect"
 
 ssh -A -tt -o StrictHostKeyChecking=no bob@jumphost << 'EOF'
-ssh -tt -o StrictHostKeyChecking=no root@target "touch /tmp/hello.txt && sleep 120 && exit"
+ssh -tt -o StrictHostKeyChecking=no root@target "touch /tmp/hello.txt && sleep 600 && exit"
 exit
 EOF
 echo "SSH disconnect"
