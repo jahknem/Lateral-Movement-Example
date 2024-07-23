@@ -1,9 +1,12 @@
 # Lateral-Movement-Example
 Docker Compose Project which showcases Lateral Movement possibilities
 
+## Scenario
 
+ToDO, write Text!
 ## Solution
-
+<details>
+  <summary>(Spoiler Warning)</summary>
 Log in on webmin with creds root:password on port 10000
 
 Go to terminal
@@ -34,8 +37,10 @@ Use the forwarded ssh agent to log in as bob on the target machine
 sudo SSH_AUTH_SOCK=/tmp/ssh-XXXXiyyyyy/agent.xx ssh root@target
 ```
 
+
 output the flag
 
 ```
 cat /root/flag.txt
 ```
+</details>
